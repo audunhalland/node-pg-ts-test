@@ -59,7 +59,9 @@ const exampleQuery = async (
 }
 
 async function main() {
-  const pool = new Pool();
+  const pool = new Pool({
+    connectionString: 'postgresql://postgres:postgres@localhost:5555/postgres'
+  });
 
   await transaction(async ctx => {
     await exampleQuery(ctx, { id: 32 });
