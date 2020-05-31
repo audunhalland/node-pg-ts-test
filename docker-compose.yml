@@ -1,0 +1,10 @@
+version: '3.3'
+
+services:
+    knex_postgres:
+      image: postgres
+      ports:
+        - 5555:5432
+      environment:
+        - POSTGRES_USER=knex
+        - POSTGRES_PASSWORD=knex
