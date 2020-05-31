@@ -4,7 +4,7 @@
     "db-migrate": "db-migrate"
   },
   "dependencies": {
-    "db-migrate": "^0.11.11",
+    "db-migrate": "1.0.0-beta.8",
     "db-migrate-pg": "^1.2.2",
     "pg": "^8.2.1",
     "sql-template-tag": "^3.4.0"
