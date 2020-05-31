@@ -1,5 +1,6 @@
-import { Pool, ClientBase, PoolClient } from 'pg';
+import { Pool, ClientBase } from 'pg';
 import sql, { Sql } from 'sql-template-tag';
+import DBMigrate from 'db-migrate';
 
 // Some sql constants
 const TRUE = sql`TRUE`;
@@ -32,7 +33,9 @@ async function transaction<T>(
     const context = new PgContext(client);
     const value =  await exec(context);
     await client.query('COMMIT');
+    console.log('releasing client...');
     client.release();
+    console.log('released!');
     return value;
   } catch (err) {
     client.release(err);
@@ -55,18 +58,34 @@ const exampleQuery = async (
 
   console.log(query.text);
 
-  return await ctx.query(query);
+  const result = await ctx.query(query);
+  console.log('result: ', result);
+}
+
+async function migrate() {
+  const instance = DBMigrate.getInstance(true);
+  console.log('resetting migrations...');
+  await instance.reset();
+  console.log('migrating to latest...');
+  await instance.up();
 }
 
 async function main() {
+  await migrate();
+
+  console.log('creating connection pool...');
   const pool = new Pool({
     connectionString: 'postgresql://postgres:postgres@localhost:5555/postgres'
   });
+
+  console.log('running queries...');
 
   await transaction(async ctx => {
     await exampleQuery(ctx, { id: 32 });
     await exampleQuery(ctx, {});
   }, pool);
+
+  console.log('done!');
 }
 
 main();

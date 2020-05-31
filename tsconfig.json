@@ -7,10 +7,13 @@
     "strict": true,
     "moduleResolution": "node",
     "sourceMap": true,
-    "rootDir": "server",
+    "rootDir": "src",
     "outDir": "server_dist",
     "baseUrl": "./",
-    "allowJs": false
+    "allowJs": false,
+    "paths": {
+      "db-migrate": ["src/typedefs/db-migrate"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
