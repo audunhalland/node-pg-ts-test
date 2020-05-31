@@ -5,6 +5,14 @@ import DBMigrate from 'db-migrate';
 // Some sql constants
 const TRUE = sql`TRUE`;
 
+async function migrate() {
+  const instance = DBMigrate.getInstance(true);
+  console.log('resetting migrations...');
+  await instance.reset();
+  console.log('migrating to latest...');
+  await instance.up();
+}
+
 // Client wrapper for forcing the use of the Sql type
 class PgContext {
   private client: ClientBase;
@@ -60,14 +68,6 @@ const exampleQuery = async (
 
   const result = await ctx.query(query);
   console.log('result: ', result);
-}
-
-async function migrate() {
-  const instance = DBMigrate.getInstance(true);
-  console.log('resetting migrations...');
-  await instance.reset();
-  console.log('migrating to latest...');
-  await instance.up();
 }
 
 async function main() {
