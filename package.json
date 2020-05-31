@@ -9,6 +9,8 @@
     "sql-template-tag": "^3.4.0"
   },
   "devDependencies": {
+    "@types/node": "^14.0.6",
+    "@types/pg": "^7.14.3",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.3"
   }
